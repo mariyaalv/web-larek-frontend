@@ -12,6 +12,7 @@ export function isEmpty(value: any): boolean {
 
 export type SelectorCollection<T> = string | NodeListOf<Element> | T[];
 
+//вместо querySelectorAll
 export function ensureAllElements<T extends HTMLElement>(selectorElement: SelectorCollection<T>, context: HTMLElement = document as unknown as HTMLElement): T[] {
     if (isSelector(selectorElement)) {
         return Array.from(context.querySelectorAll(selectorElement)) as T[];
@@ -49,6 +50,7 @@ export function cloneTemplate<T extends HTMLElement>(query: string | HTMLTemplat
     return template.content.firstElementChild.cloneNode(true) as T;
 }
 
+//названия по БЭМ
 export function bem(block: string, element?: string, modifier?: string): { name: string, class: string } {
     let name = block;
     if (element) name += `__${element}`;
