@@ -13,7 +13,9 @@
   padding-bottom: 5vh;
 
   &_active {
-    display: flex;
+    display: grid;
+    align-content: center;
+    min-height: 90vmin;
   }
 
   &__container {

@@ -1,4 +1,4 @@
-import { TFormOfPayment, ErrorStatus, TPayment } from './../../types/index';
+import { TFormOfPayment, TPayment } from './../../types/index';
 import { Form } from './Form';
 import { ensureElement } from '../../utils/utils';
 import { IEvents } from './../base/events';

@@ -143,6 +143,7 @@ events.on('basket:open', () => {
 	modal.open();
 });
 
+
 // // Открыть форму заказа
 // events.on('order:open', () => {
 //   modal.render({

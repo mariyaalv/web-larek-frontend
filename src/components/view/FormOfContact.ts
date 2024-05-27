@@ -1,4 +1,4 @@
-import { TFormOfContact, ErrorStatus } from './../../types/index';
+import { TFormOfContact } from './../../types/index';
 import { Form } from './Form';
 import { IEvents } from './../base/events';
 

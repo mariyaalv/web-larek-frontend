@@ -13,7 +13,6 @@ export class Page extends Component<IPage> {
 	protected _wrapper: HTMLElement;
 	protected _basket: HTMLButtonElement;
 	protected _counter: HTMLSpanElement;
-	protected _locked: HTMLDivElement;
 
 	constructor(protected container: HTMLElement, protected events: IEvents) {
 		super(container);
