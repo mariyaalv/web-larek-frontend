@@ -38,6 +38,7 @@ export class Basket extends Component<IBasketView> {
 
 	set total(total: number) {
 		this.setText(this._total, String(total) + ' синапсов');
+		this._button.disabled = total <= 0;
 	}
 
 	set list(cards: HTMLElement[]) {

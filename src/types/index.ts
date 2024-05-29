@@ -70,7 +70,7 @@ export type FormErrors = Partial<Record<keyof IOrder, string>>;
 
 export enum ErrorStatus {
 	EmptyEmail = 'Необходимо указать email',
-	EmptyPnone = 'Необходимо указать телефон',
-	EmptyAdress = 'Необходимо указать адрес',
+	EmptyPhone = 'Необходимо указать телефон',
+	EmptyAddress = 'Необходимо указать адрес',
 	EmptyPayment = 'Выберите способ оплаты',
 }

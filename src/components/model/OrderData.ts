@@ -56,13 +56,13 @@ export class OrderData implements IOrderData {
 			errors.payment = ErrorStatus.EmptyPayment;
 		}
 		if (!this._paymentInfo.address) {
-			errors.address = ErrorStatus.EmptyAdress;
+			errors.address = ErrorStatus.EmptyAddress;
 		}
 		if (!this._contactInfo.email) {
 			errors.email = ErrorStatus.EmptyEmail;
 		}
 		if (!this._contactInfo.phone) {
-			errors.phone = ErrorStatus.EmptyPnone;
+			errors.phone = ErrorStatus.EmptyPhone;
 		}
 		this.formErrors = errors;
 		this.events.emit('formErrors:change', this.formErrors);

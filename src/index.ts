@@ -146,8 +146,8 @@ events.on('basket:open', () => {
 });
 
 events.on('basket:submit', () => {
+	orderData.clearOrder();
   orderData.paymentInfo = {payment: formOrder.payment, address: formOrder.address};
-	basketData.clearBasket();
 	modal.render(formOrder.render({valid: formOrder.valid}));
 });
 
@@ -157,8 +157,8 @@ events.on('order:valid', () => {
 });
 
 events.on('order:submit', () => {
-	orderData.contactInfo = {email: formContacts.email, phone: formContacts.phone};
 	orderData.clearUserContacts();
+	orderData.contactInfo = {email: formContacts.email, phone: formContacts.phone};
 	modal.render(formContacts.render({valid: formContacts.valid}));
 });
 
