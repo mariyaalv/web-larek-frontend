@@ -159,12 +159,11 @@ events.on('contacts:valid', () => {
   orderData.contactInfo = {email: formContacts.email, phone: formContacts.phone};
  });
 
-events.on('order:submit', () => {
-	orderData.clearUserContacts();
-	orderData.contactInfo = {email: formContacts.email, phone: formContacts.phone};
-	modal.render(formContacts.render({valid: formContacts.valid}));
-});
-
+ events.on('order:submit', () => {
+  orderData.clearUserContacts();
+  modal.render(formContacts.render({valid: false, ...orderData.contactInfo}));
+ });
+ 
 // Изменилось состояние валидации формы
 events.on('formErrors:change', (errors: Partial<IOrder>) => {
   const { payment, address, email, phone } = errors;

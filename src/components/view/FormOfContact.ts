@@ -25,17 +25,17 @@ export class FormContacts
 	}
 
 	set phone(value: string) {
-		this.setText(this.inputPhone, value);
-	}
+		this.inputPhone.value = value;
+	 }
 
 	get phone() {
 		return this.inputPhone.value;
 	}
 
 	set email(value: string) {
-		this.setText(this.inputEmail, value);
-	}
-
+		this.inputEmail.value = value;
+	 }
+	 
 	get email() {
 		return this.inputEmail.value;
 	}

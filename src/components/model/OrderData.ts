@@ -53,6 +53,10 @@ export class OrderData implements IOrderData {
 		}
 	}
 
+	get contactInfo() {
+		return this._contactInfo;
+	 }
+
 	checkValidation() {
 		const errors: typeof this.formErrors = {};
 		if (!this._paymentInfo.payment) {
