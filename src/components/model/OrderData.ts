@@ -22,7 +22,7 @@ export class OrderData implements IOrderData {
 	clearOrder() {
 		this._paymentInfo = {
 			address: '',
-			payment: 'cash',
+			payment: null,
 		};
 	}
 
@@ -39,6 +39,10 @@ export class OrderData implements IOrderData {
 		if (this.checkValidation()) {
 			this.events.emit('order:ready', this.paymentInfo);
 		}
+	}
+
+	get paymentInfo() {
+    return this._paymentInfo;
 	}
 
 	set contactInfo(info: TFormOfContact) {

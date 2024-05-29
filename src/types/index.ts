@@ -58,13 +58,13 @@ export interface ISuccessData {
 
 export type TForm = { valid: boolean };
 
-export type TFormOfPayment = Pick<IOrder, 'payment' | 'address'>;
+export type TFormOfPayment = Pick<IOrder, 'payment' | 'address' | null>;
 
 export type TFormOfContact = Pick<IOrder, 'email' | 'phone'>;
 
 export type TSuccessData = { id: string; total: string };
 
-export type TPayment = 'card' | 'cash';
+export type TPayment = 'card' | 'cash' | null;
 
 export type FormErrors = Partial<Record<keyof IOrder, string>>;
 

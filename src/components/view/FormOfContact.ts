@@ -20,7 +20,7 @@ export class FormContacts
 			'email'
 		) as HTMLInputElement;
 		this.inputPhone = this.container.elements.namedItem(
-			'email'
+			'phone'
 		) as HTMLInputElement;
 	}
 

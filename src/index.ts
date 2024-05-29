@@ -147,14 +147,17 @@ events.on('basket:open', () => {
 
 events.on('basket:submit', () => {
 	orderData.clearOrder();
-  orderData.paymentInfo = {payment: formOrder.payment, address: formOrder.address};
-	modal.render(formOrder.render({valid: formOrder.valid}));
+  modal.render(formOrder.render({valid: false, ...orderData.paymentInfo}));
 });
 
 //взаимодействие пользователя с полями формы доставки
 events.on('order:valid', () => {
   orderData.paymentInfo = {payment: formOrder.payment, address: formOrder.address};
 });
+
+events.on('contacts:valid', () => {
+  orderData.contactInfo = {email: formContacts.email, phone: formContacts.phone};
+ });
 
 events.on('order:submit', () => {
 	orderData.clearUserContacts();
@@ -171,12 +174,12 @@ events.on('formErrors:change', (errors: Partial<IOrder>) => {
   formContacts.errors = Object.values({phone, email}).filter(i => !!i).join('; ');
 });
 
-// events.on('contacts:submit', (data: TFormOfContact) => {
-// 	orderData.contactInfo = data;
-// 	api.postOrder(orderData.getOrderData()).then(result => {
-// 		orderData.clearOrder();
-// 		orderData.clearUserContacts();
-// 		basketData.clearBasket();
-// 		modal.render(success.render(result));
-// 	}).catch(e => console.error(e));
-// });
+events.on('contacts:submit', (data: TFormOfContact) => {
+	orderData.contactInfo = data;
+	api.postOrder(orderData.getOrderData()).then(result => {
+		orderData.clearOrder();
+		orderData.clearUserContacts();
+		basketData.clearBasket();
+		modal.render(success.render(result));
+	}).catch(e => console.error(e));
+});
