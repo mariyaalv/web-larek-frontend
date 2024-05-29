@@ -1,6 +1,5 @@
 import { IOrder } from './../../types/index';
 import { IEvents } from '../base/events';
-
 import {
 	IOrderData,
 	TFormOfPayment,
