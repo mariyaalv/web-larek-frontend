@@ -1,3 +1,4 @@
+import { IOrder } from './../../types/index';
 import { IEvents } from '../base/events';
 
 import {
@@ -11,6 +12,7 @@ import {
 export class OrderData implements IOrderData {
 	protected _paymentInfo: TFormOfPayment;
 	protected _contactInfo: TFormOfContact;
+	protected order: IOrder;
 	formErrors: FormErrors = {};
 
 	constructor(protected events: IEvents) {
@@ -21,7 +23,7 @@ export class OrderData implements IOrderData {
 	clearOrder() {
 		this._paymentInfo = {
 			address: '',
-			payment: undefined,
+			payment: 'cash',
 		};
 	}
 
@@ -35,11 +37,17 @@ export class OrderData implements IOrderData {
 	set paymentInfo(info: TFormOfPayment) {
 		this._paymentInfo.payment = info.payment;
 		this._paymentInfo.address = info.address;
+		if (this.checkValidation()) {
+			this.events.emit('order:ready', this.paymentInfo);
+		}
 	}
 
 	set contactInfo(info: TFormOfContact) {
 		this._contactInfo.email = info.email;
 		this._contactInfo.phone = info.phone;
+		if (this.checkValidation()) {
+			this.events.emit('сontacts:ready', this.contactInfo);
+		}
 	}
 
 	checkValidation() {
@@ -60,4 +68,8 @@ export class OrderData implements IOrderData {
 		this.events.emit('formErrors:change', this.formErrors);
 		return Object.keys(errors).length === 0;
 	}
+
+	getOrderData() {
+    return this.order;
+  }
 }

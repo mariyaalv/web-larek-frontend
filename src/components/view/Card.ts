@@ -9,10 +9,10 @@ interface ICardAction {
 
 export class Card extends Component<ICard> {
 	protected _id: string;
-	protected readonly _title: HTMLHeadingElement;
-	protected readonly _price: HTMLSpanElement;
-	protected readonly _image: HTMLImageElement;
-	protected readonly _category: HTMLSpanElement;
+	protected _title: HTMLHeadingElement;
+	protected _price: HTMLSpanElement;
+	protected _image: HTMLImageElement;
+	protected _category: HTMLSpanElement;
 	protected _description: HTMLParagraphElement;
 	protected button: HTMLButtonElement;
 	protected _index: HTMLSpanElement;
@@ -62,30 +62,20 @@ export class Card extends Component<ICard> {
 		switch (name.toLowerCase()) {
 			case 'софт-скил':
 				return 'card__category_soft';
-				break;
 			case 'дополнительное':
 				return 'card__category_additional';
-				break;
 			case 'кнопка':
 				return 'card__category_button';
-				break;
 			case 'хард-скил':
 				return 'card__category_hard';
-				break;
 			default:
 				return 'card__category_other';
 		}
 	}
 
-	protected addClassCategory(value: string) {
-		if (value in this.categoryClass) {
-			this._category.classList.add(this.categoryClass(value));
-		}
-	}
-
 	set category(category: string) {
 		this.setText(this._category, category);
-		this.addClassCategory(category);
+		this._category.classList.add(this.categoryClass(category));
 	}
 
 	set index(index: number) {

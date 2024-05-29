@@ -1,5 +1,5 @@
 import { Card } from './components/view/Card';
-import { IProduct } from './types/index';
+import { IProduct, TFormOfContact, IOrder } from './types/index';
 import { Success } from './components/view/Success';
 import { FormContacts } from './components/view/FormOfContact';
 import { FormPayment } from './components/view/FormOfPayment';
@@ -13,7 +13,7 @@ import './scss/styles.scss';
 import { ActionAPI } from './components/ActionApi';
 import { API_URL, CDN_URL } from './utils/constants';
 import { EventEmitter } from './components/base/events';
-import { cloneTemplate, createElement, ensureElement } from './utils/utils';
+import { cloneTemplate, ensureElement } from './utils/utils';
 import { CardData } from './components/model/CardData';
 
 //шаблоны
@@ -87,7 +87,9 @@ function renderBasket() {
 					onClick: () => events.emit('basket:delete', product),
 				});
 				return card.render({
-					...product,
+					title: product.title,
+          id: product.id,
+          price: product.price,
 					index: ++index,
 				});
 			}),
@@ -143,45 +145,38 @@ events.on('basket:open', () => {
 	modal.open();
 });
 
+events.on('basket:submit', () => {
+  orderData.paymentInfo = {payment: formOrder.payment, address: formOrder.address};
+	basketData.clearBasket();
+	modal.render(formOrder.render({valid: formOrder.valid}));
+});
 
-// // Открыть форму заказа
-// events.on('order:open', () => {
-//   modal.render({
-//       content: order.render({
-//           phone: '',
-//           email: '',
-//           valid: false,
-//           errors: []
-//       })
-//   });
+//взаимодействие пользователя с полями формы доставки
+events.on('order:valid', () => {
+  orderData.paymentInfo = {payment: formOrder.payment, address: formOrder.address};
+});
+
+events.on('order:submit', () => {
+	orderData.contactInfo = {email: formContacts.email, phone: formContacts.phone};
+	orderData.clearUserContacts();
+	modal.render(formContacts.render({valid: formContacts.valid}));
+});
+
+// Изменилось состояние валидации формы
+events.on('formErrors:change', (errors: Partial<IOrder>) => {
+  const { payment, address, email, phone } = errors;
+  formOrder.valid = !payment && !address;
+  formContacts.valid = !email && !phone;
+  formOrder.errors = Object.values({payment, address}).filter(i => !!i).join('; ');
+  formContacts.errors = Object.values({phone, email}).filter(i => !!i).join('; ');
+});
+
+// events.on('contacts:submit', (data: TFormOfContact) => {
+// 	orderData.contactInfo = data;
+// 	api.postOrder(orderData.getOrderData()).then(result => {
+// 		orderData.clearOrder();
+// 		orderData.clearUserContacts();
+// 		basketData.clearBasket();
+// 		modal.render(success.render(result));
+// 	}).catch(e => console.error(e));
 // });
-
-// // Отправлена форма заказа
-// events.on('order:submit', () => {
-//   api.orderLots(appData.order)
-//       .then((result) => {
-//           const success = new Success(cloneTemplate(successTemplate), {
-//               onClick: () => {
-//                   modal.close();
-//                   appData.clearBasket();
-//                   events.emit('auction:changed');
-//               }
-//           });
-
-//           modal.render({
-//               content: success.render({})
-//           });
-//       })
-//       .catch(err => {
-//           console.error(err);
-//       });
-// });
-
-// success:changed
-// basket:open
-// card-preview:open
-// purchases:delete
-// purchases:add + delete
-// ${this.container.name}:submit
-// `${this.container.name}:valid`)
-// open:basket

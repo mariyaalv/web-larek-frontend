@@ -5,14 +5,13 @@ import { ensureAllElements, ensureElement } from '../../utils/utils';
 
 interface IForm {
 	valid: boolean;
-	errorMessage: string;
-	clear(): void;
+	errors: string;
 }
 
 export class Form<T> extends Component<TForm> implements IForm {
 	protected inputsList: HTMLInputElement[];
 	protected submitButton: HTMLButtonElement;
-	protected _errorMessage: HTMLSpanElement;
+	protected _errors: HTMLSpanElement;
 
 	constructor(protected container: HTMLFormElement, protected events: IEvents) {
 		super(container, events);
@@ -25,7 +24,7 @@ export class Form<T> extends Component<TForm> implements IForm {
 			'button[type=submit]',
 			container
 		);
-		this._errorMessage = ensureElement<HTMLSpanElement>(
+		this._errors = ensureElement<HTMLSpanElement>(
 			'.form__errors',
 			container
 		);
@@ -46,17 +45,13 @@ export class Form<T> extends Component<TForm> implements IForm {
 		this.submitButton.disabled = !value;
 	}
 
-	set errorMessage(value: string) {
-		this.setText(this._errorMessage, value);
+	set errors(value: string) {
+		this.setText(this._errors, value);
 	}
 
 	render(data: Partial<T> & TForm): HTMLElement {
 		const { valid, ...other } = data;
 		this.valid = valid;
 		return super.render(other);
-	}
-
-	clear() {
-		this.container.reset();
 	}
 }

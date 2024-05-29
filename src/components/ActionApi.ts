@@ -1,10 +1,10 @@
 import { ApiListResponse, Api } from './base/api';
-import { IOrderData, IProduct, TSuccessData } from '../types/index';
+import { IOrder, IProduct, TSuccessData } from '../types/index';
 
 export interface IActionAPI {
 	getProducts(): Promise<IProduct[]>;
 	getProductById(id: string): Promise<IProduct>;
-	postOrder(order: IOrderData): Promise<TSuccessData>;
+	postOrder(order: IOrder): Promise<TSuccessData>;
 }
 
 export class ActionAPI extends Api implements IActionAPI {
@@ -29,7 +29,7 @@ export class ActionAPI extends Api implements IActionAPI {
 		});
 	}
 
-	postOrder(order: IOrderData) {
+	postOrder(order: IOrder) {
 		return this.post('/order', order).then((success: TSuccessData) => {
 			return success;
 		});

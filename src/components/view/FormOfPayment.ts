@@ -6,7 +6,6 @@ import { IEvents } from './../base/events';
 export interface IFormOfPayment {
 	payment: TPayment | null;
 	address: string;
-	clear(): void;
 	getButtonActive(): HTMLButtonElement | null;
 }
 
@@ -72,19 +71,10 @@ export class FormPayment
 		this.buttonCash.classList.remove('button_alt-active');
 	}
 
-	clear() {
-		super.clear();
-		this.deleteActiveButtons();
-	}
-
 	set address(value: string) {
 		this.setText(this.inputAddress, value);
 	}
-
-	get address() {
-		return this.inputAddress.value;
-	}
-
+	
 	get payment() {
 		const buttonActive = this.getButtonActive();
 		return buttonActive ? (buttonActive.name as TPayment) : null;

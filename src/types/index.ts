@@ -38,6 +38,7 @@ export interface IOrderData {
 	clearOrder(): void;
 	clearUserContacts(): void;
 	checkValidation(): boolean;
+  getOrderData(): IOrder;
 }
 
 export interface IBasketData {
@@ -61,7 +62,7 @@ export type TFormOfPayment = Pick<IOrder, 'payment' | 'address'>;
 
 export type TFormOfContact = Pick<IOrder, 'email' | 'phone'>;
 
-export type TSuccessData = { id: string; total: number };
+export type TSuccessData = { id: string; total: string };
 
 export type TPayment = 'card' | 'cash';
 
