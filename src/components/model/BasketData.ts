@@ -57,4 +57,8 @@ export class BasketData extends Model implements IBasketData {
       return res + current.price;
     }, 0);
   }
+
+  getProductIdsInBasket(): string[] {
+    return this.cardsInBasket.filter(card => card.price > 0).map(card => card.id);
+  }  
 }

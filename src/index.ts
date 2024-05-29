@@ -1,11 +1,10 @@
 import { Card } from './components/view/Card';
-import { IProduct, TFormOfContact, IOrder } from './types/index';
+import { IProduct, IOrder } from './types/index';
 import { Success } from './components/view/Success';
 import { FormContacts } from './components/view/FormOfContact';
 import { FormPayment } from './components/view/FormOfPayment';
 import { Basket } from './components/view/Basket';
 import { Modal } from './components/view/Modal';
-import { SuccessData } from './components/model/SuccessData';
 import { BasketData } from './components/model/BasketData';
 import { OrderData } from './components/model/OrderData';
 import { Page } from './components/view/Page';
@@ -37,7 +36,6 @@ const api = new ActionAPI(CDN_URL, API_URL);
 const cardsData = new CardData(events);
 const basketData = new BasketData(events);
 const orderData = new OrderData(events);
-const successData = new SuccessData(events);
 
 //экземпляры классов слоя представления
 const page = new Page(containerPage, events);
@@ -173,12 +171,21 @@ events.on('formErrors:change', (errors: Partial<IOrder>) => {
   formContacts.errors = Object.values({phone, email}).filter(i => !!i).join('; ');
 });
 
-events.on('contacts:submit', (data: TFormOfContact) => {
-	orderData.contactInfo = data;
-	api.postOrder(orderData.getOrderData()).then(result => {
-		orderData.clearOrder();
-		orderData.clearUserContacts();
-		basketData.clearBasket();
-		modal.render(success.render(result));
-	}).catch(e => console.error(e));
-});
+events.on('contacts:submit', () => {
+  api.postOrder({
+   ...orderData.contactInfo,
+   ...orderData.paymentInfo,
+   items: basketData.getProductIdsInBasket(),
+   total: basketData.getTotal()
+  }).then(result => {
+   orderData.clearOrder();
+   orderData.clearUserContacts();
+   basketData.clearBasket();
+   modal.render(success.render(result));
+  })
+   .catch(e => console.error(e));
+ });
+
+ events.on('success:submit', () => {
+  modal.close();
+ })

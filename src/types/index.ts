@@ -50,6 +50,7 @@ export interface IBasketData {
 	getTotal(): number;
 	isInBasket(productId: string): boolean;
 	getProductsInBasket(): IProduct[];
+	getProductIdsInBasket(): string[];
 }
 
 export interface ISuccessData {
